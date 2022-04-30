@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Редактирование студента</title>
+        <link th:replace="fragments/linkcss :: linkcss"/>
+    </head>
+    <body>
+        <main>
+            <div th:replace="fragments/sidebar :: sidebar" />
+            <div class="container">
+                <div class="page-header">
+                    <h2 class="page-name">Редактирование студента</h2>
+                    <button id="openModal">Удалить студента</button>
+                </div>
+                <form th:action="@{'/students/' + ${student.id}}" method="post" class="form-container">
+                    <div><input type="text" name="surname" placeholder="Фамилия" th:value="${student.surname}"></div>
+                    <div><input type="text" name="name" placeholder="Имя" th:value="${student.name}"></div>
+                    <div>
+                        <select name="groupId">
+                            <option th:value="${student.group.id}" th:text="${student.group.name}" />
+                            <option th:each="gr : ${groups}" th:if="${gr.name} != ${student.group.name}" th:value="${gr.id}" th:text="${gr.name}" />
+                        </select>
+                    </div>
+                    <div><button type="submit">Сохранить изменения</button></div>
+                </form>
+            </div>
+            <div class="modal-overlay" id="overlay">
+                <form th:action="@{'/students/' + ${student.id} +'/remove'}" method="post" class="modal-window">
+                    <div><h2 th:text="'Вы действительно хотите удалить студента ' + ${student.surname} + ' ' + ${student.name} + '?'" /></div>
+                    <div><p>Студент будет удалён из группы к которой привязан.</p></div>
+                    <div><p>Данное действие отменить НЕЛЬЗЯ!</p></div>
+                    <div>
+                        <button type="reset" id="closeModal">Отмена</button>
+                        <button type="submit">Удалить</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <script src="/scripts/modal.js"></script>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Журнал посещаемости</title>
+    <link th:replace="fragments/linkcss :: linkcss"/>
+</head>
+<body>
+<main>
+    <div th:replace="fragments/sidebar :: sidebar" />
+    <div class="container">
+        <div class="page-header">
+            <h2 class="page-name" th:text="${subject.name} + ': ' + ${group.name} + ' ' + ${date}" />
+        </div>
+        <form th:action="@{'/journal/' + ${subject.id} + '/' + ${group.id} + '/save'}" class="form-container w100" method="post">
+            <input type="hidden" name="date" th:value="${date}" />
+            <div class="table-border">
+                <table class="w100">
+                    <tr>
+                        <th>Студент</th>
+                        <th>Присутствие</th>
+                    </tr>
+                    <tr th:if="${lessons.size() > 0}" th:each="student : ${students}">
+                        <td class="p10" th:text="${student.surname} + ' ' + ${student.name}" />
+                        <td th:each="lesson : ${lessons}" th:if="${lesson.student.id} == ${student.id}"><input class="p10" type="checkbox" name="isAttended" th:checked="${lesson.isAttended}" th:value="${student.id}"></td>
+                    </tr>
+                    <tr th:if="${lessons.size() <= 0}" th:each="st : ${students}">
+                        <td class="p10" th:text="${st.surname} + ' ' + ${st.name}" />
+                        <td><input class="p10" type="checkbox" name="isAttended" th:value="${st.id}"></td>
+                    </tr>
+                </table>
+            </div>
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

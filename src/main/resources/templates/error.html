@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Ошибка</title>
+        <link th:replace="fragments/linkcss :: linkcss"/>
+    </head>
+    <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+        <main>
+            <div th:replace="fragments/sidebar :: sidebar" />
+            <div class="container">
+                <p class="emoji-symbol">&#9785;</p>
+                <h2 class="mrg-10">При выполнении запроса произошла ошибка.</h2>
+                <p class="mrg-10" th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|" />
+                <a href="/" class="mrg-10"><button>На главную</button></a>
+            </div>
+        </main>
+    </body>
+</html>

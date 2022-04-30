@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Создание пользователя</title>
+        <link th:replace="fragments/linkcss :: linkcss"/>
+    </head>
+    <body>
+        <main>
+            <div th:replace="fragments/sidebar :: sidebar" />
+            <div class="container">
+                <p class="emoji-symbol">&#128736;</p>
+                <h2>Создание первого аккаунта администратора</h2>
+                <p>Задайте логин и пароль для аккаунта.</p>
+                <div th:if="${message}">
+                    <p class="error-msg" th:text="${message}"></p>
+                </div>
+                <form class="form-container" th:action="@{/firstuser}" method="post">
+                    <div><input type="text" name="username" placeholder="Логин"/></div>
+                    <div><input type="password" name="password" placeholder="Пароль"/></div>
+                    <div><button type="submit">Создать</button></div>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

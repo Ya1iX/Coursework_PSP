@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Редактирование группы</title>
+    <link th:replace="fragments/linkcss :: linkcss"/>
+</head>
+<body>
+<main>
+    <div th:replace="fragments/sidebar :: sidebar" />
+    <div class="container">
+        <div class="page-header">
+            <h2 class="page-name" th:text="'Редактирование группы: ' + ${group.name}" />
+            <button id="openModal">Удалить группу</button>
+        </div>
+        <form th:action="@{'/groups/' + ${group.id} + '/edit'}" method="post" class="form-container bordered w100">
+            <div><h3>Изменить название</h3></div>
+            <div><input type="text" name="name" placeholder="Название группы" th:value="${group.name}"></div>
+            <div>
+                <button type="submit">Сохранить</button>
+            </div>
+        </form>
+        <form th:action="@{'/groups/' + ${group.id} + '/addStudent'}" method="post" class="form-container bordered w100">
+            <div><h3>Добавить студента в группу</h3></div>
+            <div><input type="text" name="name" placeholder="Имя" /></div>
+            <div><input type="text" name="surname" placeholder="Фамилия" /></div>
+            <div>
+                <button type="submit">Добавить</button>
+            </div>
+        </form>
+    </div>
+    <div class="modal-overlay" id="overlay">
+        <form th:action="@{'/groups/' + ${group.id} +'/remove'}" method="post" class="modal-window">
+            <div><h2 th:text="'Вы действительно хотите удалить группу ' + ${group.name} + '?'" /></div>
+            <div><p>Студенты, привязанные к группе тоже буду удалены.</p></div>
+            <div><p><b>Данное действие отменить НЕЛЬЗЯ!</b></p></div>
+            <div>
+                <button type="reset" id="closeModal">Отмена</button>
+                <button type="submit">Удалить</button>
+            </div>
+        </form>
+    </div>
+</main>
+<script src="/scripts/modal.js"></script>
+</body>
+</html>

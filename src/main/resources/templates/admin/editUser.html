@@ -1,0 +1,42 @@
+firstuser.htmlusers.html<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Редактирование группы</title>
+    <link th:replace="fragments/linkcss :: linkcss"/>
+</head>
+<body>
+<main>
+    <div th:replace="fragments/sidebar :: sidebar" />
+    <div class="container">
+        <div class="page-header">
+            <h2 class="page-name" th:text="'Редактирование пользователя: ' + ${user.username}" />
+            <button id="openModal" th:disabled="${user.getRoles().contains(roles[1])} ? true : false" th:title="${user.getRoles().contains(roles[1])} ? 'Администратора нельзя отключить' : ''" th:text="${user.isEnabled()} ? 'Отключить пользователя' : 'Включить пользователя'" />
+        </div>
+        <form th:action="@{'/users/' + ${user.id} + '/edit'}" method="post" class="form-container w100">
+            <div><h3>Изменить пользователя</h3></div>
+            <div><input type="text" name="username" placeholder="Логин" th:value="${user.username}"></div>
+            <div><input type="password" name="password" placeholder="Новый пароль"></div>
+            <div th:each="role : ${roles}">
+                <input type="checkbox" th:name="${role}" th:utext="'<b>' + ${role} + '</b>'" th:checked="${user.getRoles().contains(role)} ? true : false" />
+            </div>
+            <button type="submit">Сохранить</button>
+        </form>
+        <a href="/users"><button>Назад</button></a>
+    </div>
+    <div class="modal-overlay" id="overlay">
+        <form th:action="@{'/users/' + ${user.id} +'/disable'}" method="post" class="modal-window">
+            <div><h2 th:text="${user.isEnabled()} ? 'Вы действительно хотите отключить пользователя ' + ${user.username} + '?' : 'Вы действительно хотите включить пользователя ' + ${user.username} + '?'" /></div>
+            <div><p><b>Пользователь не может войти в систему, пока его аккаунт выключен!</b></p></div>
+            <input type="hidden" th:value="${user.isEnabled()} ? false : true" name="activity">
+            <div>
+                <button type="reset" id="closeModal">Отмена</button>
+                <button type="submit" th:text="${user.isEnabled()} ? 'Отключить' : 'Включить'" />
+            </div>
+        </form>
+    </div>
+</main>
+<script src="/scripts/modal.js"></script>
+</body>
+</html>

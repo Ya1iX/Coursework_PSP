@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Журнал посещаемости</title>
+    <link th:replace="fragments/linkcss :: linkcss"/>
+</head>
+<body>
+<main>
+    <div th:replace="fragments/sidebar :: sidebar" />
+    <div class="container">
+        <div class="page-header">
+            <h2 class="page-name">Управление журналом</h2>
+        </div>
+        <div class="content-row">
+            <form th:action="@{'/journal/' + ${subject.id} + '/' + ${group.id} + '/view'}" class="form-container bordered w100" method="post">
+                <div class="mrg-l"><h2>Просмотр временного промежутка</h2></div>
+                <div><p>Выберите диапазон:</p></div>
+                <p><input type="date" name="dateStart"/> - <input type="date" name="dateEnd"/></p>
+                <div><button type="submit">Просмотр</button></div>
+            </form>
+            <form th:action="@{'/journal/' + ${subject.id} + '/' + ${group.id} + '/add'}" class="form-container bordered w100" method="post">
+                <div class="mrg-l"><h2>Редактирование занятия</h2></div>
+                <div><p>Выберите дату:</p></div>
+                <p><input type="date" name="date"/></p>
+                <div><button type="submit">Редактировать</button></div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

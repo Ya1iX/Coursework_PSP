@@ -1,0 +1,13 @@
+<header th:fragment="header">
+    <h1 class="app_name">StudAttend</h1>
+    <nav>
+        <ul class="nav_links">
+            <li sec:authorize="isAuthenticated()"><a href="/journal">Журнал</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/groups">Группы</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/students">Студенты</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/subjects">Предметы</a></li>
+            <li><a href="/about">О проекте</a></li>
+        </ul>
+    </nav>
+    <form C th:action="@{/logout}" method="post"><button type="submit">Выход</button></form>
+</header>

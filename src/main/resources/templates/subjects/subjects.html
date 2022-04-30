@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Список предметов</title>
+    <link th:replace="fragments/linkcss :: linkcss"/>
+</head>
+<body>
+<main>
+    <div th:replace="fragments/sidebar :: sidebar" />
+    <div class="container">
+        <div class="page-header">
+            <h2 class="page-name">Список предметов</h2>
+            <div><form th:action="@{/subjects}" method="post" class="mrg-10"><input type="text" name="search" placeholder="Поиск"></form></div>
+            <button id="openModal">Добавить</button>
+        </div>
+        <h3 th:if="${subjects.size()} < 1">Ничего не найдено</h3>
+        <div class="list-item" th:each="sbj : ${subjects}">
+            <a th:href="'/subjects/' + ${sbj.id}" th:text="${sbj.name}" />
+        </div>
+    </div>
+    <div class="modal-overlay" id="overlay">
+        <form th:action="@{/subjects/add}" method="post" class="modal-window">
+            <div><h1>Добавление нового предмета</h1></div>
+            <div><input type="text" name="name" placeholder="Название предмета" /></div>
+            <div>
+                <button type="reset" id="closeModal">Отмена</button>
+                <button type="submit">Добавить</button>
+            </div>
+        </form>
+    </div>
+</main>
+<script src="/scripts/modal.js"></script>
+</body>
+</html>

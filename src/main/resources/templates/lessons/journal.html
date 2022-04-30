@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Журнал посещаемости</title>
+    <link th:replace="fragments/linkcss :: linkcss"/>
+</head>
+<body>
+<main>
+    <div th:replace="fragments/sidebar :: sidebar" />
+    <div class="container">
+        <div class="page-header">
+            <h2 class="page-name">Выберите предмет</h2>
+            <div><form th:action="@{/journal}" method="post"><input type="text" name="search" placeholder="Поиск" class="mrg-10"></form></div>
+        </div>
+        <h3 th:if="${subjects.size()} < 1">Ничего не найдено</h3>
+        <div class="list-item" th:each="sbj : ${subjects}">
+            <a th:href="@{'/journal/' + ${sbj.id}}" th:text="${sbj.name}" />
+        </div>
+    </div>
+</main>
+</body>
+</html>

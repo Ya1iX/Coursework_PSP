@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Список студентов</title>
+    <link th:replace="fragments/linkcss :: linkcss"/>
+</head>
+<body>
+<main>
+    <div th:replace="fragments/sidebar :: sidebar" />
+    <div class="container">
+        <div class="page-header">
+            <h2 class="page-name">Список студентов</h2>
+            <div><form th:action="@{/students}" method="post"><input type="text" name="search" placeholder="Поиск" class="mrg-10"></form></div>
+            <button id="openModal">Добавить</button>
+        </div>
+        <h3 th:if="${students.size()} < 1">Ничего не найдено</h3>
+        <div class="list-item" th:each="st : ${students}">
+            <a th:href="'/students/' + ${st.id}">
+                <h3 th:utext="${st.surname} + ' ' + ${st.name}" />
+                <p th:text="${st.group.name}" />
+            </a>
+        </div>
+    </div>
+    <div class="modal-overlay" id="overlay">
+        <form th:action="@{/students/add}" method="post" class="modal-window">
+            <div><h1>Добавление нового студента</h1></div>
+            <div><input type="text" name="name" placeholder="Имя" /></div>
+            <div><input type="text" name="surname" placeholder="Фамилия" /></div>
+            <div>
+                <select name="groupId">
+                    <option value="-1">Группа</option>
+                    <option th:each="gr : ${groups}" th:value="${gr.id}" th:text="${gr.name}" />
+                </select>
+            </div>
+            <div>
+                <button type="reset" id="closeModal">Отмена</button>
+                <button type="submit">Добавить</button>
+            </div>
+        </form>
+    </div>
+</main>
+<script src="/scripts/modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Просмотр группы</title>
+    <link th:replace="fragments/linkcss :: linkcss"/>
+</head>
+<body>
+<main>
+    <div th:replace="fragments/sidebar :: sidebar" />
+    <div class="container">
+        <div class="page-header">
+            <h2 class="page-name" th:text="'Просмотр группы ' + ${group.name}" />
+            <a th:href="'/groups/' + ${group.id} + '/edit'"><button>Редактировать</button></a>
+        </div>
+        <h2 class="mrg-left mb-10">Список студентов в группе:</h2>
+        <div class="list-item" th:each="st : ${students}">
+            <a th:href="'/students/' + ${st.id}" th:text="${st.surname} + ' ' + ${st.name}" />
+        </div>
+    </div>
+</main>
+</body>
+</html>

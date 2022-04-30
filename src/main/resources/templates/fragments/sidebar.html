@@ -1,0 +1,13 @@
+<div th:fragment="sidebar" class="sidebar">
+    <h1 class="app_name mrg-10">StudAttend</h1>
+    <nav class="mrg-10">
+        <ul class="nav_links">
+            <li sec:authorize="isAuthenticated()"><a href="/journal">Журнал</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/groups">Группы</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/students">Студенты</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/subjects">Предметы</a></li>
+            <li sec:authorize="hasAuthority('ADMIN')"><a href="/users">Список пользователей</a></li>
+        </ul>
+    </nav>
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" class="mrg-10"><button type="submit">Выход</button></form>
+</div>

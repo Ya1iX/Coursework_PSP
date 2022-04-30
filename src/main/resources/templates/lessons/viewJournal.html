@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Просмотр журнала</title>
+    <link th:replace="fragments/linkcss :: linkcss"/>
+</head>
+<body>
+<main>
+    <div th:replace="fragments/sidebar :: sidebar" />
+    <div class="container">
+        <div class="page-header">
+            <h2 class="page-name" th:text="${subject.name} + ': ' + ${group.name}" />
+        </div>
+        <h3 th:if="${dates.size()} < 1">Занятий в указанном промежутке не найдено!</h3>
+        <div class="table-border" th:if="${dates.size()} > 0">
+            <span>
+                <table>
+                    <tr><th class="alg-c">Студент/Дата</th></tr>
+                    <tr th:each="student, state : ${students}">
+                        <td class="p10" th:text="${state.count} + '. ' + ${student.surname} + ' ' + ${student.name}" />
+                    </tr>
+                </table>
+            </span>
+            <span class="overflow w100">
+                <table class="w100">
+                    <tr>
+                        <th  class="alg-c" th:each="date : ${dates}" th:text="${date}" />
+                    </tr>
+                    <tr th:each="student : ${students}">
+                        <td class="alg-c p10" th:each="lesson : ${lessons}" th:if="${lesson.student.id} == ${student.id}" th:utext="${lesson.isAttended} ? ' ' : '<b>Н</b>'" />
+                    </tr>
+                </table>
+            </span>
+        </div>
+        <a class="p10" th:href="'/journal/' + ${subject.id} + '/' + ${group.id}"><button>Назад</button></a>
+    </div>
+</main>
+</body>
+</html>

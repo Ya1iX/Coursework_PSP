@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Создание пользователя</title>
+        <link th:replace="fragments/linkcss :: linkcss"/>
+    </head>
+    <body>
+        <main>
+            <div th:replace="fragments/sidebar :: sidebar" />
+            <div class="container">
+                <div class="page-header">
+                    <h2 class="page-name">Список пользователей</h2>
+                    <div><form th:action="@{/users}" method="post"><input type="text" name="search" placeholder="Поиск" class="mrg-10"></form></div>
+                    <button id="openModal">Добавить</button>
+                </div>
+                <div class="list-item" th:each="user : ${users}">
+                    <a th:href="'/users/' + ${user.id}" th:text="${user.username}" />
+                </div>
+            </div>
+            <div class="modal-overlay" id="overlay">
+                <form th:action="@{/users/add}" method="post" class="modal-window">
+                    <div><h1>Добавление нового пользователя</h1></div>
+                    <div><input type="text" name="username" placeholder="Логин" /></div>
+                    <div><input type="password" name="password" placeholder="Пароль" /></div>
+
+                    <div th:each="role : ${roles}">
+                        <input type="checkbox" th:name="${role}" th:utext="'<b>' + ${role} + '</b>'" th:checked="${role.name} == 'USER' ? true : false"/>
+                    </div>
+
+                    <div>
+                        <button type="reset" id="closeModal">Отмена</button>
+                        <button type="submit">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <script src="/scripts/modal.js"></script>
+    </body>
+</html>

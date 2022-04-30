@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Авторизация</title>
+        <link th:replace="fragments/linkcss :: linkcss"/>
+    </head>
+    <body>
+        <main>
+            <div th:replace="fragments/sidebar :: sidebar" />
+            <div class="container">
+                <p class="emoji-symbol">&#128274;</p>
+                <h2>Авторизация</h2>
+                <p>Для продолжения работы необходимо авторизоваться.</p>
+                <p>Чтобы зарегистрироваться, обратитесь к администратору.</p>
+                <div th:if="${param.error}">
+                    <p class="error-msg">Неверное имя пользователя или пароль.</p>
+                </div>
+                <form class="form-container" th:action="@{/login}" method="post">
+                    <div><input type="text" name="username" placeholder="Логин"/></div>
+                    <div><input type="password" name="password" placeholder="Пароль"/></div>
+                    <div><button type="submit">Вход</button></div>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>
